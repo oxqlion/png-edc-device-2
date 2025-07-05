@@ -37,6 +37,7 @@ class TransactionViewModel : ViewModel() {
             for (dc in snapshots!!.documentChanges) {
                 when (dc.type) {
                     DocumentChange.Type.ADDED -> {
+                        Log.d("New Document", dc.document.toString())
                         // New document added
                         val newDocument = dc.document
                         // Use manual parsing instead of toObject()
@@ -80,7 +81,11 @@ class TransactionViewModel : ViewModel() {
         return Transaction(
             id = documentId,
             status = data["status"] as? String ?: "",
-            // Ignore the items field that's causing issues
+            total = (data["total"] as? Number)?.toDouble() ?: 0.0,
+            subtotal = (data["subtotal"] as? Number)?.toDouble() ?: 0.0,
+            pajakRestoran = (data["pajakRestoran"] as? Number)?.toDouble() ?: 0.0,
+            ppn = (data["ppn"] as? Number)?.toDouble() ?: 0.0,
+            // Add other fields as needed
         )
     }
 
